@@ -1,12 +1,12 @@
 FROM jzmatrix/debian-baseimage
 ################################################################################
-RUN apt-get update && \
-    apt-get upgrade && \
+RUN apt-get -y update && \
+    apt-get -y upgrade && \
     apt-get -y install cron rsync apt-transport-https ca-certificates curl screen fping nmap iputils-ping host whois traceroute
 ##
-RUN  apt-get autoremove && \
-     apt-get clean && \
-     apt-get autoclean && \
+RUN  apt-get -y autoremove && \
+     apt-get -y clean && \
+     apt-get -y autoclean && \
      rm -rf /var/lib/apt/lists/* && \
      mkdir /opt/sslUpdate && \
      mkdir /var/run/sshd && \
