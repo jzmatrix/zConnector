@@ -1,4 +1,4 @@
-FROM debian-baseimage
+FROM jzmatrix/debian-baseimage
 ################################################################################
 RUN apt-get update && \
     apt-get upgrade && \
