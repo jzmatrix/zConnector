@@ -1,8 +1,12 @@
-FROM jzmatrix/debian-baseimage
-################################################################################
-RUN apt-get -y update && \
+FROM debian:11
+##
+RUN apt-get update && \
     apt-get -y upgrade && \
-    apt-get -y install cron rsync apt-transport-https ca-certificates curl screen fping nmap iputils-ping host whois traceroute
+    export DEBIAN_FRONTEND=noninteractive && \
+     apt-get --no-install-recommends -y install vim net-tools lsof curl nmap openssh-client openssh-server openssl tzdata gpg ca-certificates cron rsync apt-transport-https screen fping iputils-ping host whois traceroute&& \
+     /bin/rm -f /etc/localtime && \
+     cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
+     echo "America/New_York" > /etc/timezone
 ##
 RUN  apt-get -y autoremove && \
      apt-get -y clean && \
@@ -11,15 +15,13 @@ RUN  apt-get -y autoremove && \
      mkdir /opt/sslUpdate && \
      mkdir /var/run/sshd && \
      chmod 0755 /var/run/sshd
-################################################################################
+##
 ADD config/authorized_keys /root/.ssh/authorized_keys
 ADD startServices.sh /opt/startServices.sh
 ADD config/bash_profile /root/.bash_profile
-################################################################################
-################################################################################
+##
 RUN chmod 0600 /root/.ssh/authorized_keys && \
     chmod 755 /opt/startServices.sh && \
     chmod 644 /root/.bash_profile
-################################################################################
-################################################################################
+##
 CMD [ "/opt/startServices.sh" ]
