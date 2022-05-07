@@ -1,12 +1,12 @@
 FROM debian:11
 ##
-RUN apt-get update && \
+RUN apt-get -y update && \
     apt-get -y upgrade && \
     export DEBIAN_FRONTEND=noninteractive && \
-     apt-get --no-install-recommends -y install vim net-tools lsof curl nmap openssh-client openssh-server openssl tzdata gpg ca-certificates cron rsync apt-transport-https screen fping iputils-ping host whois traceroute&& \
-     /bin/rm -f /etc/localtime && \
-     cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
-     echo "America/New_York" > /etc/timezone
+    apt-get -y install vim net-tools lsof curl nmap openssh-client openssh-server openssl tzdata gpg ca-certificates cron rsync apt-transport-https screen fping iputils-ping host whois traceroute&& \
+    /bin/rm -f /etc/localtime && \
+    cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
+    echo "America/New_York" > /etc/timezone
 ##
 RUN  apt-get -y autoremove && \
      apt-get -y clean && \
