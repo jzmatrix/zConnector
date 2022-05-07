@@ -7,20 +7,20 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --no-cache python3 py-pip
-            # pip3 install docker-compose==1.26.2
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
+      #- run:
+      #    name: Install dependencies
+      #    command: |
+      #      # apk add --no-cache python3 py-pip
+      #      # pip3 install docker-compose==1.26.2
+      #- restore_cache:
+      #    keys:
+      #      - v1-{{ .Branch }}
+      #    paths:
+      #      - /caches/app.tar
       - run:
           name: Load Docker image layer cache
           command: |
-            # set +o pipefail
+            set +o pipefail
             docker load -i /caches/app.tar | true
       - run:
           name: Build application Docker image
