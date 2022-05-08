@@ -12,6 +12,8 @@ jobs:
           command: |
             echo ${DOCKER_USERNAME}
             echo ${DOCKER_PASSWORD}
+            echo $DOCKER_USERNAME
+            echo $DOCKER_USERNAME
       - run:
           name: Authenticate with Docker
           command: |
