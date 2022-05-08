@@ -8,6 +8,11 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Check Variables
+          command: |
+            echo ${DOCKER_USERNAME}
+            echo ${DOCKER_PASSWORD}
+      - run:
           name: Authenticate with Docker
           command: |
             docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
