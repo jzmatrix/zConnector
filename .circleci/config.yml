@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Authenticate with Docker
           command: |
-            echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin
+            docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
       - run:
           name: Load Docker image layer cache
           command: |
