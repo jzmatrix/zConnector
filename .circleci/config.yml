@@ -24,36 +24,20 @@ jobs:
             mv ./kubectl /usr/local/bin
             date +%Y%m%d_%H%M > /tmp/timestamp
       - run:
-          name: Check Variables
+          name: Authenticate with Docker
           command: |
-            echo "TIMESTAMP 1:"
-            export TS=`date +%Y%m%d_%H%M`
+            docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
+      - run:
+          name: Build application Docker image
+          command: |
+            TS=`cat /tmp/timestamp`
             echo $TS
-            echo ${DOCKER_USERNAME}
-            echo ${DOCKER_PASSWORD}
-            echo ${CIRCLE_PROJECT_REPONAME}
-            echo ${CIRCLE_SHA1}
-            echo "kubeconfig"
-            echo $kubeconfig
-            echo "TIMESTAMP:"
-            cat /tmp/timestamp
-            echo "KUBECTL:"
-            kubectl --help
-#      - run:
-#          name: Authenticate with Docker
-#          command: |
-#            docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
-#      - run:
-#          name: Load Docker image layer cache
-#          command: |
-#            set +o pipefail
-#            docker load -i /caches/app.tar | true
-#      - run:
-#          name: Build application Docker image
-#          command: |
-#            export TS=`date +%Y%m%d_%H%M`
-#            echo $TS
-#            ##
+            ##
 #            docker build --cache-from=app  -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
 #            ##
 #            mkdir -p /caches
