@@ -18,7 +18,9 @@ jobs:
       - run:
           name: Prepare Environment
           command: |
-            apk install kubectl
+            curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+            chmod +x ./kubectl
+            mv ./kubectl /usr/local/bin
             date +%Y%m%d_%H%M > /tmp/timestamp
       - run:
           name: Check Variables
@@ -34,6 +36,8 @@ jobs:
             echo $kubeconfig
             echo "TIMESTAMP:"
             cat /tmp/timestamp
+            echo "KUBECTL:"
+            kubectl --help
 #      - run:
 #          name: Authenticate with Docker
 #          command: |
