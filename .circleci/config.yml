@@ -23,7 +23,11 @@ jobs:
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin
             date +%Y%m%d_%H%M > /tmp/timestamp
-            echo $kubeconfig > /tmp/kubeconfig
+            echo $kubeconfig > /tmp/kubeconfig64
+            echo "B64:"
+            which base64
+            ####
+            base64  -d /tmp/kubeconfig64 > /tmp/kubeconfig
       - run:
           name: Authenticate with Docker
           command: |
