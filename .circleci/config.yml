@@ -23,6 +23,7 @@ jobs:
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin
             date +%Y%m%d_%H%M > /tmp/timestamp
+            echo $kubeconfig > /tmp/kubeconfig
       - run:
           name: Authenticate with Docker
           command: |
@@ -38,14 +39,16 @@ jobs:
             TS=`cat /tmp/timestamp`
             echo $TS
             ##
-#            docker build --cache-from=app  -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
-#            ##
-#            mkdir -p /caches
-#            docker save -o /caches/app.tar jzmatrix/zconnector:${CIRCLE_SHA1}
-#           ##
-#            docker push jzmatrix/zconnector:$TS
-#            docker push jzmatrix/zconnector:latest
-#      - save_cache:
-#          key: v1-{{ .Branch }}-{{ epoch }}
-#          paths:
-#            - /caches/app.tar
+            docker build --cache-from=app  -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
+            ##
+            mkdir -p /caches
+            docker save -o /caches/app.tar jzmatrix/zconnector:${CIRCLE_SHA1}
+            ##
+            docker push jzmatrix/zconnector:$TS
+            docker push jzmatrix/zconnector:latest
+            ##
+            kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS --kubeconfig /tmp/kubeconfig
+      - save_cache:
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
