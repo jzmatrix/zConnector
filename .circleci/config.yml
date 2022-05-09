@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 workflows:
   build:
@@ -6,9 +6,6 @@ workflows:
       - build:
           context:
             - ssdK8S
-
-
-
 
 jobs:
   build:
