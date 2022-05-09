@@ -1,4 +1,15 @@
 version: 2
+
+workflows:
+  build:
+    jobs:
+      - build:
+          context:
+            - ssdK8S
+
+
+
+
 jobs:
   build:
     working_directory: /app
@@ -16,30 +27,31 @@ jobs:
             echo ${DOCKER_PASSWORD}
             echo ${CIRCLE_PROJECT_REPONAME}
             echo ${CIRCLE_SHA1}
-      - run:
-          name: Authenticate with Docker
-          command: |
-            docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
-      - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-      - run:
-          name: Build application Docker image
-          command: |
-            export TS=`date +%Y%m%d_%H%M`
-            echo $TS
-            ##
-            docker build --cache-from=app -t jzmatrix/zconnector:${CIRCLE_SHA1} -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
-            ##
-            mkdir -p /caches
-            docker save -o /caches/app.tar jzmatrix/zconnector:${CIRCLE_SHA1}
-            ##
-            docker push jzmatrix/zconnector:${CIRCLE_SHA1}
-            docker push jzmatrix/zconnector:$TS
-            docker push jzmatrix/zconnector:latest
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+            echo "kubeconfig"
+            echo $kubeconfig
+#      - run:
+#          name: Authenticate with Docker
+#          command: |
+#            docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
+#      - run:
+#          name: Load Docker image layer cache
+#          command: |
+#            set +o pipefail
+#            docker load -i /caches/app.tar | true
+#      - run:
+#          name: Build application Docker image
+#          command: |
+#            export TS=`date +%Y%m%d_%H%M`
+#            echo $TS
+#            ##
+#            docker build --cache-from=app  -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
+#            ##
+#            mkdir -p /caches
+#            docker save -o /caches/app.tar jzmatrix/zconnector:${CIRCLE_SHA1}
+#           ##
+#            docker push jzmatrix/zconnector:$TS
+#            docker push jzmatrix/zconnector:latest
+#      - save_cache:
+#          key: v1-{{ .Branch }}-{{ epoch }}
+#          paths:
+#            - /caches/app.tar
