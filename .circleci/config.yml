@@ -51,7 +51,7 @@ jobs:
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
             ##
-            kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS --kubeconfig /tmp/kubeconfig
+            kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS --kubeconfig /tmp/kubeconfig -n websites
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
