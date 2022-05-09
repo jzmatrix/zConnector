@@ -28,21 +28,18 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
+            export TS=`date +%Y%m%d_%H%M`
             echo $TS
+            ##
             docker build --cache-from=app -t jzmatrix/zconnector:${CIRCLE_SHA1} -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
-      - run:
-          name: Save Docker image layer cache
-          command: |
+            ##
             mkdir -p /caches
             docker save -o /caches/app.tar jzmatrix/zconnector:${CIRCLE_SHA1}
+            ##
+            docker push jzmatrix/zconnector:${CIRCLE_SHA1}
+            docker push jzmatrix/zconnector:$TS
+            docker push jzmatrix/zconnector:latest
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
-      - run:
-          name: Push app image
-          command: | 
-            echo $TS
-            docker push jzmatrix/zconnector:${CIRCLE_SHA1}
-            docker push jzmatrix/zconnector:$TS
-            docker push jzmatrix/zconnector:latest
