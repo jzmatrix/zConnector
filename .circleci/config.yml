@@ -28,6 +28,7 @@ jobs:
       - run:
           name: Build application Docker image
           command: |
+            echo $TS
             docker build --cache-from=app -t jzmatrix/zconnector:${CIRCLE_SHA1} -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
       - run:
           name: Save Docker image layer cache
@@ -40,7 +41,8 @@ jobs:
             - /caches/app.tar
       - run:
           name: Push app image
-          command: |
+          command: | 
+            echo $TS
             docker push jzmatrix/zconnector:${CIRCLE_SHA1}
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
