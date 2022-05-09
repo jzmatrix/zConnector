@@ -16,8 +16,14 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: Prepare Environment
+          command: |
+            apk install kubectl
+            date +%Y%m%d_%H%M > /tmp/timestamp
+      - run:
           name: Check Variables
           command: |
+            echo "TIMESTAMP 1:"
             export TS=`date +%Y%m%d_%H%M`
             echo $TS
             echo ${DOCKER_USERNAME}
@@ -26,6 +32,8 @@ jobs:
             echo ${CIRCLE_SHA1}
             echo "kubeconfig"
             echo $kubeconfig
+            echo "TIMESTAMP:"
+            cat /tmp/timestamp
 #      - run:
 #          name: Authenticate with Docker
 #          command: |
