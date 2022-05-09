@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Install apps outside of build due to pipeline issues
+apt -y update
 apt -y install screen openssh-client openssh-server
 
 # Copy config files
