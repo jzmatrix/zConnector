@@ -19,6 +19,7 @@ jobs:
           name: Prepare Environment
           command: |
             apk add curl
+            apk add helm
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin
@@ -27,7 +28,9 @@ jobs:
             echo "B64:"
             which base64
             ####
-            base64  -d /tmp/kubeconfig64 > /tmp/kubeconfig
+            mkdir ~/.kube
+            ####
+            base64  -d /tmp/kubeconfig64 > ~/.kube/config
       - run:
           name: Authenticate with Docker
           command: |
@@ -51,7 +54,7 @@ jobs:
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
             ##
-            kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS --kubeconfig /tmp/kubeconfig -n websites
+            # kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS -n websites
       - save_cache:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
