@@ -19,7 +19,12 @@ jobs:
           name: Prepare Environment
           command: |
             apk add curl
-            apk add helm
+            ## 
+            curl -LO https://get.helm.sh/helm-v3.8.2-linux-amd64.tar.gz
+            tar -zxvf helm-v3.8.2-linux-amd64.tar.gz
+            mv linux-amd64/helm /usr/local/bin/helm
+            chmod +x /usr/local/bin/helm
+            ##
             curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
             chmod +x ./kubectl
             mv ./kubectl /usr/local/bin
