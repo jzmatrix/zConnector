@@ -14,7 +14,8 @@ jobs:
       - image: docker:18.06.3-ce-git
     steps:
       - checkout
-      - setup_remote_docker
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Prepare Environment
           command: |
@@ -41,11 +42,6 @@ jobs:
           command: |
             docker login --username ${DOCKER_USERNAME} -p "${DOCKER_PASSWORD}"
       - run:
-          name: Load Docker image layer cache
-          command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-      - run:
           name: Build application Docker image
           command: |
             TS=`cat /tmp/timestamp`
@@ -60,7 +56,3 @@ jobs:
             docker push jzmatrix/zconnector:latest
             ##
             # kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS -n websites
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
