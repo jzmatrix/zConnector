@@ -27,6 +27,8 @@ spec:
           volumeMounts:
           - name: budget-data
             mountPath: /var/www/budget.ziemba.net
+          - name: cuck-chat-data
+            mountPath: /var/www/cuck.chat
           - name: status-data
             mountPath: /var/www/status.ziemba.net
           - name: kik-data
@@ -37,6 +39,9 @@ spec:
         - name: budget-data
           persistentVolumeClaim:
             claimName: ws-budget-ziemba-net
+        - name: cuck-chat-data
+          persistentVolumeClaim:
+            claimName: cuckchat
         - name: status-data
           persistentVolumeClaim:
             claimName: ws-status-ziemba-net
