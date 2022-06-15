@@ -53,4 +53,4 @@ jobs:
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
             ##
-            helm install ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
+            helm upgrade ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
