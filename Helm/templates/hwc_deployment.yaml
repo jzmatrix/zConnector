@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: zconnector-hwc
-          image: jzmatrix/zconnector:latest
+          image: "{{ $root.Values.image.repository }}/{{ $root.Values.image.name }}:{{ $root.Values.image.tag }}"
           ports:
             - containerPort: 22
               hostPort: 2223

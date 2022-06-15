@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zconnector
+  name: zconnector-websites
   namespace: websites
   labels:
-    app: zconnector
+    app: zconnector-websites
 spec:
   replicas: 3
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: zconnector
+      app: zconnector-websites
   template:
     metadata:
       labels:
-        app: zconnector
+        app: zconnector-websites
     spec:
       containers:
-        - name: zconnector
-          image: jzmatrix/zconnector:latest
+        - name: zconnector-websites
+          image: "{{ $root.Values.image.repository }}/{{ $root.Values.image.name }}:{{ $root.Values.image.tag }}"
           ports:
             - containerPort: 22
               hostPort: 2222
@@ -55,13 +55,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: zconnector
+  name: zconnector-websites
   namespace: websites
 spec:
   selector:
-    app: zconnector
+    app: zconnector-websites
   ports:
-    - name: zconnector-admin
+    - name: zconnector-websites-admin
       protocol: TCP
       port: 2222
       targetPort: 22

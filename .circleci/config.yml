@@ -49,10 +49,7 @@ jobs:
             ##
             docker build --cache-from=app  -t jzmatrix/zconnector:$TS -t jzmatrix/zconnector:latest .
             ##
-            mkdir -p /caches
-            docker save -o /caches/app.tar jzmatrix/zconnector:latest
-            ##
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
             ##
-            kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS -n websites
+            helm install ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
