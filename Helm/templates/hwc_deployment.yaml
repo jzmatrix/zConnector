@@ -1,3 +1,4 @@
+{{- if .Values.doHWC }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,3 +51,4 @@ spec:
       protocol: TCP
       port: 2223
       targetPort: 22
+{{- end }}

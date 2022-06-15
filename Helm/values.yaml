@@ -1,6 +1,9 @@
 namespace: default
 serviceName: ""
 
+doHWC: 0
+doWS: 1
+
 replicaCount: 3
 
 image:
