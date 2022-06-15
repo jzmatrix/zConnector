@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zconnector-hwc
+  namespace: hwc
+  labels:
+    app: zconnector-hwc
+spec:
+  replicas: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: zconnector-hwc
+  template:
+    metadata:
+      labels:
+        app: zconnector-hwc
+    spec:
+      containers:
+        - name: zconnector-hwc
+          image: jzmatrix/zconnector:latest
+          ports:
+            - containerPort: 22
+              hostPort: 2223
+              protocol: TCP
+          volumeMounts:
+          - name: rc-hwc
+            mountPath: /mnt/rc-hwc
+          - name: ws-hwc
+            mountPath: /mnt/ws-hwc
+      volumes:
+        - name: rc-hwc
+          persistentVolumeClaim:
+            claimName: rc-hwc
+        - name: ws-hwc
+          persistentVolumeClaim:
+            claimName: ws-hwc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zconnector-hwc
+  namespace: hwc
+spec:
+  selector:
+    app: zconnector-hwc
+  ports:
+    - name: zconnector-hwc-admin
+      protocol: TCP
+      port: 2223
+      targetPort: 22

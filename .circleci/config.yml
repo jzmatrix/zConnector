@@ -55,4 +55,4 @@ jobs:
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
             ##
-            # kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS -n websites
+            kubectl set image deployment/zconnector zconnector=jzmatrix/zconnector:$TS -n websites
