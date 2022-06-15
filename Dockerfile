@@ -6,15 +6,14 @@ RUN apt-get -y update && \
     apt-get -y install vim net-tools lsof curl nmap openssl tzdata gpg ca-certificates cron rsync apt-transport-https fping iputils-ping host whois traceroute && \
     /bin/rm -f /etc/localtime && \
     cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
-    echo "America/New_York" > /etc/timezone
-##
-RUN  apt-get -y autoremove && \
-     apt-get -y clean && \
-     apt-get -y autoclean && \
-     rm -rf /var/lib/apt/lists/* && \
-     mkdir /opt/sslUpdate && \
-     mkdir /var/run/sshd && \
-     chmod 0755 /var/run/sshd
+    echo "America/New_York" > /etc/timezone && \
+    apt-get -y autoremove && \
+    apt-get -y clean && \
+    apt-get -y autoclean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir /opt/sslUpdate && \
+    mkdir /var/run/sshd && \
+    chmod 0755 /var/run/sshd
 ##
 ADD config/authorized_keys /root/.ssh/authorized_keys
 ADD startServices.sh /opt/startServices.sh
