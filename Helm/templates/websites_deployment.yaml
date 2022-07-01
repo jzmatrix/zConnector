@@ -25,33 +25,33 @@ spec:
             - containerPort: 22
               hostPort: 2222
               protocol: TCP
-          volumeMounts:
-          - name: budget-data
-            mountPath: /var/www/budget.ziemba.net
-          - name: cuck-chat-data
-            mountPath: /var/www/cuck.chat
-          - name: status-data
-            mountPath: /var/www/status.ziemba.net
-          - name: kik-data
-            mountPath: /var/www/kik.ziemba.net
-          - name: kik-drop
-            mountPath: /var/www/kik-drop
-      volumes:
-        - name: budget-data
-          persistentVolumeClaim:
-            claimName: ws-budget-ziemba-net
-        - name: cuck-chat-data
-          persistentVolumeClaim:
-            claimName: cuckchat
-        - name: status-data
-          persistentVolumeClaim:
-            claimName: ws-status-ziemba-net
-        - name: kik-data
-          persistentVolumeClaim:
-            claimName: ws-kik-ziemba-net
-        - name: kik-drop
-          persistentVolumeClaim:
-            claimName: ws-kik-drop
+#          volumeMounts:
+#          - name: budget-data
+#            mountPath: /var/www/budget.ziemba.net
+#          - name: cuck-chat-data
+#            mountPath: /var/www/cuck.chat
+#          - name: status-data
+#            mountPath: /var/www/status.ziemba.net
+#          - name: kik-data
+#            mountPath: /var/www/kik.ziemba.net
+#          - name: kik-drop
+#            mountPath: /var/www/kik-drop
+#      volumes:
+#        - name: budget-data
+#          persistentVolumeClaim:
+#            claimName: ws-budget-ziemba-net
+#        - name: cuck-chat-data
+#          persistentVolumeClaim:
+#            claimName: cuckchat
+#        - name: status-data
+#          persistentVolumeClaim:
+#            claimName: ws-status-ziemba-net
+#        - name: kik-data
+#          persistentVolumeClaim:
+#            claimName: ws-kik-ziemba-net
+#        - name: kik-drop
+#          persistentVolumeClaim:
+#            claimName: ws-kik-drop
 ---
 apiVersion: v1
 kind: Service
