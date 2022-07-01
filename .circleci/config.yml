@@ -57,7 +57,7 @@ jobs:
             ##
             helm list |grep ${SERVICE_NAME}
             ##
-            if [[ $ helm list |grep ${SERVICE_NAME}) ]]; then
+            if [[ $(helm list |grep ${SERVICE_NAME}) ]]; then
               helm install ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
             else
               helm upgrade ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
