@@ -5,7 +5,8 @@ workflows:
     jobs:
       - build:
           context:
-            - ssdK8S
+            # - ssdK8S
+            - harvk8s2
             - DockerLogin
 
 jobs:
