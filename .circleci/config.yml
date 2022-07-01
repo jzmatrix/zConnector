@@ -39,6 +39,7 @@ jobs:
             mkdir ~/.kube
             ####
             base64  -d /tmp/kubeconfig64 > ~/.kube/config
+            chmod 600 ~/.kube/config
       - run:
           name: Authenticate with Docker
           command: |
@@ -54,4 +55,4 @@ jobs:
             docker push jzmatrix/zconnector:$TS
             docker push jzmatrix/zconnector:latest
             ##
-            helm upgrade ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
+            helm install ${SERVICE_NAME} Helm/ --set image.repository="${IMAGE_REPO}",image.name="${IMAGE_NAME}",image.tag=$TS
